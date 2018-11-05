@@ -1,0 +1,117 @@
+/* 创建一个函数来判断给定的表达式中的大括号是否闭合，返回 True/False，对于空字串，返回 True： */
+
+/* 正则 */
+// 思路：找到所有邻接的匹配的括号对，然后将其替换为空，直到不能替换为止。此时如果最后得到的字符串为空即为匹配，否则不匹配。
+// 正则：最坏的时间复杂度是 O(n^2)级别的，对于长篇大论是不友好的。
+function isBalanced(exp) {
+  var reg = /\{\}/g, len;
+  do{
+    len = exp.length;
+    exp = exp.replace(reg, "")
+  } while (len != exp.length)
+  return exp.length === 0
+}
+
+/* 栈 */
+// 思路：
+// 1. 巡检字符串，将括号分类，一类是左括号、一类是右括号。
+// 2. 左括号看作是入栈信号，右括号是出栈信号。
+// 3. 当出栈时，如果栈定没有与之匹配的元素，则宣告不匹配。
+// 4. 当巡检完毕，如果得到空栈，则匹配，否则不匹配。
+
+//时间复杂度：O(n) 。
+function isBalanced(exp){
+  let info = exp.split("")
+  let stack = []
+
+  for(let i = 0; i < info.length; ++i){
+    let el = info[i]
+    if (el === "{"){
+      stack.push("{")
+    } else if (el === "}"){
+      if(stack.length === 0){
+        return false;
+      } else {
+        stack.pop()
+      }
+    }
+  }
+
+  return stack.length === 0
+}
+
+isBalanced('{{}}{}{}') // true
+isBalanced('{}{{}') // false
+
+
+
+
+/* 扩充：实现函数 isBalanced，用 true 或 false 表示给定的字符串的括号是否平衡（一一对应）。注意了是要支持三种类型的括号{}，[]，和()。带有交错括号的字符串应该返回 false。 */
+const isBalanced = (str) => {
+  const map = new Map([
+    ["{", "}"],
+    ["[", "]"],
+    ["(", ")"]
+  ])
+
+  let stack = [];
+
+  for(let i = 0 ; i < str.length; ++i){
+    let node = str[i]
+
+    if (map.has(node)){
+      stack.push(node)
+    } else if ([...map.values()].includes(node)){
+      if (stack[stack.length - 1] !== [...map.entries()].filter(el=>el[1]===node).pop().shift()){
+        return false
+      } else {
+        stack.splice(stack.length-1, 1)
+      }
+    }
+  }
+
+  return stack.length === 0
+}
+
+isBalanced('(foo { bar (baz) [boo] })') // true
+isBalanced('foo { bar { baz }') // false
+isBalanced('foo { (bar [baz] } )') // false
+
+/* 进一步扩充： 要求严格限制括号的顺序，即中括号外围只能是大括号，内部只能是小括号。也即：括号只能以大括号、中括号、小括号的顺序只能前面的包含后面的，不能后面的包含前面的。*/
+const isStrictBalanced = (str) => {
+  const map = new Map([
+    ["{", "}"],
+    ["[", "]"],
+    ["(", ")"]
+  ])
+  let stack = [], keys = [...map.keys()], values = [...map.values()];
+  for(let i = 0 ; i < str.length; ++i){
+    let node = str[i]
+    if (map.has(node)){
+      if (stack.length){
+        let arr = [node, [...stack].pop()]
+            .map(el => keys.indexOf(el))
+
+        if (arr[0] < arr[1]){
+          return false
+        }
+      }
+      stack.push(node)
+    }
+    else if (values.includes(node)){
+      let needKey = [...map.entries()].filter(el=>el[1]===node).pop().shift()
+      if ([...stack].pop() !== needKey){
+        return false
+      }
+      stack.pop()
+    }
+  }
+  return stack.length === 0
+}
+
+/*
+参考链接:
+1. http://www.leon82.com/
+2. https://mp.weixin.qq.com/s/va_23rCJhnr2LA9ILncNeg
+3. http://es6.ruanyifeng.com/#docs/set-map
+* */
