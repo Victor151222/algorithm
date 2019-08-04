@@ -1,6 +1,6 @@
 
 
-``` JavaScript
+```js
 //辅助类 表示要加入链表的项
 class Node {
     constructor(element) {
