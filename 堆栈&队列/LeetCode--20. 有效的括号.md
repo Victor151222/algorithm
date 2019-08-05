@@ -16,7 +16,7 @@
 输出: true
 ```
 
-# 解：
+# 解1：
 
 ``` js
 /**
@@ -41,6 +41,26 @@ const isValid = function(s) {
     }
     // 最后栈中为空，则返回True
     return stack.length === 0;
+};
+```
+
+# 解2：
+
+时间复杂度会有点高。平均会达到O(n^2/2)
+
+``` js
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+const isValid = function(s) {
+    let length;
+    do {
+        length = s.length;
+        s = s.replace('()', '').replace('{}', '').replace('[]', '');
+    } while (length !== s.length) {
+        return length === 0;
+    }
 };
 ```
 
