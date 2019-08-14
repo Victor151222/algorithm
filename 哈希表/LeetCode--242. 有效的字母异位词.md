@@ -19,6 +19,10 @@
 
 时间复杂度：O(n)
 
+由于JavaScript中无法直接判断两个Map对象是否相同，所以时间复杂度上，此题JavaScript的使用Map的效率低于Python。
+
+**JavaScript**
+
 ``` js
 /**
  * @param {string} s
@@ -51,13 +55,32 @@ const isAnagram = function(s, t) {
 };
 ```
 
+**python**
+
+``` python
+class Solution(object):
+    def isAnagram(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        dic1, dic2 = {}, {}
+        for item in s:
+            dic1[item] = dic1.get(item, 0) + 1;
+        for item in t:
+            dic2[item] = dic2.get(item, 0) + 1;
+        return dic1 == dic2;
+
+```
+
 # 解法3：用数组来实现朴素的Hash表
 
 题目比较特殊：小写字母
 
 直接操作数组，比操作Map性能更快。
 
-此处的Hash函数为：`item.charCodeAt() - 'a'.charCodeAt()`
+此处的Hash函数为： `item.charCodeAt() - 'a'.charCodeAt()` 
 
 ``` js
 /**
