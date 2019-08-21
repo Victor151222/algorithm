@@ -1,6 +1,12 @@
 # algorithm-in-js
 记录自己的算法学习之路
 
+# Common Data Structure Operations
+
+> 图片来源：https://www.bigocheatsheet.com/
+
+![Common Data Structure Operations](./images/CommonDataStructureOperations.png)
+
 # [堆栈&队列](https://github.com/Victor151222/algorithm-in-js/tree/master/%E5%A0%86%E6%A0%88%26%E9%98%9F%E5%88%97)
 
 1. [LeetCode--20. 有效的括号](https://github.com/Victor151222/algorithm-in-js/blob/master/%E5%A0%86%E6%A0%88%26%E9%98%9F%E5%88%97/LeetCode--20.%20%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7.md)
