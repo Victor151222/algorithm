@@ -5,7 +5,7 @@
 
 > 图片来源：https://www.bigocheatsheet.com/
 
-![Common Data Structure Operations](./images/CommonDataStructureOperations.png)
+![Common Data Structure Operations](./images/常见数据结构操作对应的时间复杂度.png)
 
 # [堆栈&队列](https://github.com/Victor151222/algorithm-in-js/tree/master/%E5%A0%86%E6%A0%88%26%E9%98%9F%E5%88%97)
 
