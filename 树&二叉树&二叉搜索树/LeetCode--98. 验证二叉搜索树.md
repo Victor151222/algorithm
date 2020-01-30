@@ -11,6 +11,8 @@
 
 # 解法1：中序遍历
 
+时间复杂度为：O(n)
+
 判断中序遍历后得到的数组是否是升序的
 
 ``` js
@@ -93,6 +95,7 @@ const isValidBST = (root) => {
 
 # 解法2： 递归
 
+时间复杂度为：O(n)
 
 ``` js
 const isValidBST = (root, min, max) => {
