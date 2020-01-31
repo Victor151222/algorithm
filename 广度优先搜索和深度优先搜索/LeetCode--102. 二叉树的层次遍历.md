@@ -1,0 +1,83 @@
+# 题目描述
+
+给定一个二叉树，返回其按层次遍历的节点值。 （即逐层地，从左到右访问所有节点）。
+
+# 解法1：BFS
+
+时间复杂度：O(n)
+
+``` js
+/**
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+const levelOrder = (root) => {
+    if(!root || root.length === 0) {
+        return [];
+    }
+    let result = [];
+    let currNodes = [root];
+    while(currNodes.length !== 0) {
+        let subResult = [];
+        let nextSubResult = [];
+        for(let i = 0; i < currNodes.length; i++) {
+            subResult.push(currNodes[i].val);
+            if(currNodes[i].left !== null) {
+                nextSubResult.push(currNodes[i].left);
+            }
+            if(currNodes[i].right !== null) {
+                nextSubResult.push(currNodes[i].right);
+            }
+        }
+        result.push(subResult);
+        currNodes = nextSubResult;
+    }
+    return result;
+};
+```
+
+# 解法2：DFS
+
+时间复杂度：O(n)
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+const levelOrder = (root) => {
+    if(!root || root.length === 0) {
+        return [];
+    }
+    let result = [];
+    const dfs = (currNode, level) => {
+        if(currNode !== null) {
+            (!result[level]) && (result[level] = []);
+            result[level].push(currNode.val);
+            if(currNode.left !== null) {
+                dfs(currNode.left,level+1);
+            }
+            if(currNode.right !== null) {
+                dfs(currNode.right,level+1);
+            }           
+        }
+    };
+    dfs(root,0);
+    return result;
+};
+```
