@@ -67,7 +67,7 @@
 
 # [08. 剪枝](https://github.com/Victor151222/algorithm-in-js/tree/master/08.%20%E5%89%AA%E6%9E%9D)
 
-1. [LeetCode--51. N皇后](https://github.com/Victor151222/algorithm-in-js/blob/master/08.%20%E5%89%AA%E6%9E%9D/51.%20N%E7%9A%87%E5%90%8E.md)
+1. [LeetCode--51. N皇后](https://github.com/Victor151222/algorithm-in-js/blob/master/08.%20%E5%89%AA%E6%9E%9D/LeetCode--51.%20N%E7%9A%87%E5%90%8E.md)
 
 # [09. 二分查找](https://github.com/Victor151222/algorithm-in-js/tree/master/09.%20%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE)
 
