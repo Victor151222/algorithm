@@ -62,24 +62,24 @@ const levelOrder = function (root) {
  * @param {TreeNode} root
  * @return {number[][]}
  */
-const levelOrder = (root) => {
-    if(!root || root.length === 0) {
+const levelOrder = function (root) {
+    if (!root) {
         return [];
     }
-    let result = [];
-    const dfs = (currNode, level) => {
-        if(currNode !== null) {
-            (!result[level]) && (result[level] = []);
-            result[level].push(currNode.val);
-            if(currNode.left !== null) {
-                dfs(currNode.left,level+1);
-            }
-            if(currNode.right !== null) {
-                dfs(currNode.right,level+1);
-            }           
+    const result = [];
+    const dfs = function (currentNode, level) {
+        if (!result[level]) {
+            result[level] = [];
+        }
+        result[level].push(currentNode.val);
+        if (currentNode.left) {
+            dfs(currentNode.left, level + 1);
+        }
+        if (currentNode.right) {
+            dfs(currentNode.right, level + 1);
         }
     };
-    dfs(root,0);
+    dfs(root, 0);
     return result;
 };
 ```
