@@ -4,10 +4,11 @@
 
 # 解法1：BFS
 
+使用队列先进先出的思想
+
 时间复杂度：O(n)
 
 ``` js
-/**
 /**
  * Definition for a binary tree node.
  * function TreeNode(val) {
@@ -19,26 +20,27 @@
  * @param {TreeNode} root
  * @return {number[][]}
  */
-const levelOrder = (root) => {
-    if(!root || root.length === 0) {
+const levelOrder = function (root) {
+    if (!root) {
         return [];
     }
     let result = [];
-    let currNodes = [root];
-    while(currNodes.length !== 0) {
+    let queue = [root];
+    while (queue.length > 0) {
+        let subLenght = queue.length;
         let subResult = [];
-        let nextSubResult = [];
-        for(let i = 0; i < currNodes.length; i++) {
-            subResult.push(currNodes[i].val);
-            if(currNodes[i].left !== null) {
-                nextSubResult.push(currNodes[i].left);
+        while (subLenght) {
+            let node = queue.shift();
+            subResult.push(node.val);
+            if (node.left) {
+                queue.push(node.left);
             }
-            if(currNodes[i].right !== null) {
-                nextSubResult.push(currNodes[i].right);
+            if (node.right) {
+                queue.push(node.right);
             }
+            subLenght--;
         }
         result.push(subResult);
-        currNodes = nextSubResult;
     }
     return result;
 };
