@@ -93,15 +93,14 @@ var twoSum = function(nums, target) {
  * @return {number[]}
  */
 const twoSum = function(nums, target) {
-    const arrobj = new Map();
-    for (let i = 0; i < nums.length; i++) {
-        let comp = target - nums[i];
-        if (arrobj.get(comp) !== undefined) {
-            return [arrobj.get(comp), i];
+    const visited = new Map();
+    for(let i=0; i<nums.length; i++) {
+        otherNumber = target - nums[i];
+        if(visited.has(otherNumber)) {
+            return [visited.get(otherNumber), i];
         }
-        arrobj.set(nums[i], i);
+        visited.set(nums[i], i);
     }
-    return [];
 };
 ```
 
