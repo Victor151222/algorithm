@@ -34,31 +34,49 @@
 由于解法三没用用到hash表，所以在时间复杂度等于解法二的同时，空间复杂度低于低于解法二。为最优解。
 
 ``` js
-var threeSum = function(nums) {
-    let res = []
-    let length = nums.length;
-    nums.sort((a, b) => a - b) // 先排个队，最左边是最弱（小）的，最右边是最强(大)的 
-    if (nums[0] <= 0 && nums[length - 1] >= 0) { // 优化1: 整个数组同符号，则无解 
-        for (let i = 0; i < length - 2;) {
-            if (nums[i] > 0) break; // 优化2: 最左值为正数则一定无解 
-            let first = i + 1;
-            let last = length - 1;
-            do {
-                if (first >= last || nums[i] * nums[last] > 0) break; // 两人选相遇，或者三人同符号，则退出 
-                let result = nums[i] + nums[first] + nums[last];
-                if (result === 0) { // 如果可以组队 
-                    res.push([nums[i], nums[first], nums[last]]);
-                }
-                if (result <= 0) { // 实力太弱，把菜鸟那边右移一位 
-                    while (first < last && nums[first] === nums[++first]) {} // 如果相等就跳过 
-                } else { // 实力太强，把大神那边右移一位 
-                    while (first < last && nums[last] === nums[--last]) {}
-                }
+const threeSum = function (nums) {
+    let result = [];
+    const length = nums.length;
+    // 将数组升序排列
+    nums.sort((a, b) => a - b);
+    // 整个数组同符号，则无解 
+    if (nums[0] * nums[length - 1] > 0) {
+        return result;
+    }
+    for (let i = 0; i < length - 2; i++) {
+        // 优化点：如果遍历到开头的数组大于0终止循环
+        if (nums[i] > 0) {
+            break;
+        }
+        // 重复的项跳过
+        if (i > 0 && nums[i] === nums[i - 1]) {
+            continue;
+        }
+        let middle = i + 1;
+        let last = length - 1;
+        // 双指针，两边往中间夹
+        while (middle < last && nums[last] >= 0) {
+            // 重复的项跳过
+            if (middle > i + 1 && nums[middle] === nums[middle - 1]) {
+                middle++;
+                continue;
             }
-            while (first < last) while (nums[i] === nums[++i]) {}
+            if (last < length - 1 && nums[last] === nums[last + 1]) {
+                last--;
+                continue;
+            }
+            const sum = nums[i] + nums[middle] + nums[last];
+            if (sum < 0) {
+                middle++;
+            } else if (sum === 0) {
+                result.push([nums[i], nums[middle], nums[last]]);
+                middle++;
+            } else {
+                last--;
+            }
         }
     }
-    return res
-}
+    return result;
+};
 ```
 
