@@ -11,6 +11,13 @@
 
 # 解法1：迭代
 
+这里只需要
+
+1. 设置一个变量不停的维护当前节点，`current = head.next`。
+2. 设置初始化时将head节点指向null，让原本的head变为尾节点，下一步将当前节点指向head
+3. 然后通过临时变量，将当前节点赋值给head。进入下一次循环
+
+
 ``` js
 /**
  * Definition for singly-linked list.
@@ -67,4 +74,3 @@ const reverseList = function(head) {
     return new_head;
 };
 ```
-
