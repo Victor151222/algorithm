@@ -30,22 +30,23 @@
 回到我们的问题，我们使用 HashSet 将字符存储在当前窗口 [i,j)（最初 j=i）中。 然后我们向右侧滑动索引 j，如果它不在 HashSet 中，我们会继续滑动 j。直到 s[j] 已经存在于 HashSet 中。此时，我们找到的没有重复字符的最长子字符串将会以索引 i 开头。如果我们对所有的 i 这样做，就可以得到答案。
 
 ``` js
-const lengthOfLongestSubstring = function(s) {
+const lengthOfLongestSubstring = (s) => {
     const n = s.length;
-    const set = new Set();
-    let ans = 0; 
-    let i = 0; 
-    let j = 0;
-    while (i < n && j < n) {
-        if (!set.has(s.charAt(j))){
-            set.add(s.charAt(j++));
-            ans = Math.max(ans, j - i);
-        }
-        else {
-            set.delete(s.charAt(i++));
+    const windowSet = new Set();
+    let leftIndex = 0;
+    let rightIndex = 0;
+    let result = 0;
+    while (leftIndex < n && leftIndex < n) {
+        if (windowSet.has(s[rightIndex])) {
+            windowSet.delete(s[leftIndex]); // 删除windowSet的最左侧元素，左移窗口
+            leftIndex++;
+        } else {
+            windowSet.add(s[rightIndex]);
+            result = Math.max(result, rightIndex - leftIndex + 1);
+            rightIndex++;
         }
     }
-    return ans;
+    return result;
 };
 ```
 
@@ -56,18 +57,22 @@ const lengthOfLongestSubstring = function(s) {
 也就是说，如果 s[j] 在 [i,j)范围内有与 j′重复的字符，我们不需要逐渐增加 i 。 我们可以直接跳过[i，j′] 范围内的所有元素，并将 i 变为 j′+1。
 
 ``` js
-const lengthOfLongestSubstring = function(s) {
+const lengthOfLongestSubstring = (s) => {
     const n = s.length;
-    const map = new Map();
-    let ans = 0; 
-    for (let j = 0, i = 0; j < n; j++) {
-        if (map.has(s.charAt(j))) {
-            i = Math.max(map.get(s.charAt(j)), i);
+    const windowMap = new Map();
+    let result = 0;
+    for (let leftIndex = 0, rightIndex = 0; rightIndex < n; rightIndex++) {
+        if (windowMap.has(s[rightIndex])) {
+            // 避免windowMap.get(s[rightIndex])小于leftIndex的情况
+            // 例如abba，最后一个a时，此时windowMap.get(s[rightIndex])小于leftIndex。
+            leftIndex = Math.max(windowMap.get(s[rightIndex]), leftIndex);
         }
-        ans = Math.max(ans, j - i + 1);
-        map.set(s.charAt(j), j + 1);
+        // 每一次移动都要计算
+        result = Math.max(result, rightIndex - leftIndex + 1);
+        // 存储字符所在索引的下一个位置
+        windowMap.set(s[rightIndex], rightIndex + 1);
     }
-    return ans;
+    return result;
 };
 ```
 
